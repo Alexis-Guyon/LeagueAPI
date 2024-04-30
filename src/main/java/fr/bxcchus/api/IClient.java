@@ -58,7 +58,7 @@ public interface IClient {
     }
 
     // Méthode request pour les requêtes synchrones
-    default <T> T request(String url, HttpMethod method, Object requestBody, Class<T> responseType) {
+    default <T> T request(String url, HttpMethod method, Object requestBody, Class<T> responseType)  {
         return executeRequest(url, method, requestBody, responseType);
     }
 
