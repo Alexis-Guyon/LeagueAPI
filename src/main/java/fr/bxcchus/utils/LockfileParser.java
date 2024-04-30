@@ -1,7 +1,13 @@
 package fr.bxcchus.utils;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.File;
 import java.util.Scanner;
+
+@Setter
+@Getter
 
 public class LockfileParser {
 
@@ -36,23 +42,4 @@ public class LockfileParser {
         }
     }
 
-    public static String getPath() {
-        return path;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

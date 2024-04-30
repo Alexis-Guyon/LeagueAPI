@@ -65,7 +65,7 @@ public interface IClient {
                 if (!response.isSuccessful()) {
                     throw new IOException("Erreur lors de la récupération des données: " + response.code());
                 }
-                String jsonResponse = response.body().string();
+                String jsonResponse = response.body() != null ? response.body().string() : "Le corps de la réponse est vide ou null.";
                 Gson gson = new Gson();
                 return gson.fromJson(jsonResponse, responseType);
             }
