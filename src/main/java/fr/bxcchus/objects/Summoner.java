@@ -1,7 +1,5 @@
 package fr.bxcchus.objects;
 
-import java.util.List;
-
 public class Summoner {
     private String name;
     private int level;
