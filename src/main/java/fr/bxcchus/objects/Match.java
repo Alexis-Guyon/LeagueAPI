@@ -6,7 +6,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Match {
-    // Getters and setters
     private long gameId;
     private String gameMode;
     private String gameType;

@@ -1,15 +1,16 @@
 package fr.bxcchus.api.services;
 
+import fr.bxcchus.api.HttpMethod;
 import fr.bxcchus.api.IClient;
 import fr.bxcchus.objects.Skin;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static fr.bxcchus.utils.Constant.OWNED_SKINS_URL;
 
 public interface SkinService extends IClient {
-    default List<Skin> getSkins() throws IOException {
-        return List.of(get(OWNED_SKINS_URL, Skin[].class));
+    default CompletableFuture<Skin[]> getSkins() throws IOException {
+        return requestAsync(OWNED_SKINS_URL, HttpMethod.GET, null, Skin[].class);
     }
 }

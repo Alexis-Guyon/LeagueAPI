@@ -4,11 +4,11 @@ import fr.bxcchus.api.services.SkinService;
 import fr.bxcchus.objects.Skin;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class SkinMethod implements SkinService {
     @Override
-    public List<Skin> getSkins() throws IOException {
+    public CompletableFuture<Skin[]> getSkins() throws IOException {
         return SkinService.super.getSkins();
     }
 }
