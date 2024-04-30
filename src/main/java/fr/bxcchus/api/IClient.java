@@ -17,6 +17,7 @@ import static fr.bxcchus.utils.Constant.BASE_URL;
 import static fr.bxcchus.utils.Constant.USER;
 
 public interface IClient {
+    LockfileParser parser = LockfileParser.getInstance();
     default OkHttpClient getUnsafeOkHttpClient() {
         try {
             // Create a trust manager that trusts all certificates
@@ -54,7 +55,6 @@ public interface IClient {
 
     default <T> T get(String url, Class<T> responseType) throws IOException {
         OkHttpClient client = getUnsafeOkHttpClient();
-        LockfileParser parser = LockfileParser.getInstance();
         if (parser != null) {
             System.out.println(parser.getPort());
             Request request = new Request.Builder()
