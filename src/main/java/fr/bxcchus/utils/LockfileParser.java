@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class LockfileParser {
 
-    private static String path = "C:\\Riot Games\\League of Legends\\lockfile";
+    private static String path = "D:\\Riot Games\\League of Legends\\lockfile";
     private static LockfileParser INSTANCE;
     private String port;
     private String password;

@@ -56,6 +56,7 @@ public interface IClient {
         OkHttpClient client = getUnsafeOkHttpClient();
         LockfileParser parser = LockfileParser.getInstance();
         if (parser != null) {
+            System.out.println(parser.getPort());
             Request request = new Request.Builder()
                     .url(BASE_URL + parser.getPort() + "/" + url)
                     .addHeader("Authorization", "Basic " + Base64.getEncoder().encodeToString((USER + ":" + parser.getPassword()).getBytes()))

@@ -10,7 +10,6 @@ import static fr.bxcchus.utils.Constant.OWNED_CHAMPIONS_URL;
 
 public interface ChampionService extends IClient {
     default List<Champion> getChampions() throws IOException {
-        String url = OWNED_CHAMPIONS_URL;
-        return List.of(get(url, Champion[].class));
+        return List.of(get(OWNED_CHAMPIONS_URL, Champion[].class));
     }
 }
