@@ -1,5 +1,5 @@
 package fr.bxcchus.api;
 
 public enum HttpMethod {
-    GET, POST
+    GET, POST, PUT, DELETE
 }

@@ -24,5 +24,4 @@ public class Summoner {
     private int xpSinceLastLevel;
     private int xpUntilNextLevel;
 
-
 }
