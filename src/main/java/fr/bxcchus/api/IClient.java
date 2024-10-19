@@ -64,32 +64,41 @@ public interface IClient {
 
     // Méthode privée pour exécuter les requêtes
     private <T> T executeRequest(String url, HttpMethod method, Object requestBody, Class<T> responseType) {
-        try {
-            OkHttpClient client = getUnsafeOkHttpClient();
-            Gson gson = new Gson();
-            Request.Builder requestBuilder = new Request.Builder()
-                    .url(BASE_URL + parser.getPort() + "/" + url)
-                    .addHeader("Authorization", "Basic " + Base64.getEncoder().encodeToString((USER + ":" + parser.getPassword()).getBytes()));
+        OkHttpClient client = getUnsafeOkHttpClient();
+        Gson gson = new Gson();
+        Request.Builder requestBuilder = new Request.Builder()
+                .url(BASE_URL + parser.getPort() + "/" + url)
+                .addHeader("Authorization", "Basic " + Base64.getEncoder().encodeToString((USER + ":" + parser.getPassword()).getBytes()))
+                .addHeader("Content-Type", "application/json"); // Ajout du header Content-Type
 
-            if (method == HttpMethod.GET) {
-                requestBuilder.get();
-            } else if (method == HttpMethod.POST) {
-                String jsonBody = gson.toJson(requestBody);
-                RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonBody);
-                requestBuilder.post(body);
-            } else {
-                throw new IllegalArgumentException("Méthode de requête non prise en charge: " + method);
-            }
+        // Crée un corps structuré pour la requête PATCH
+        if (method == HttpMethod.PATCH) {
+            // S'assurer que requestBody est un objet structuré (par exemple, une map ou un modèle spécifique)
+            String jsonBody = gson.toJson(requestBody);  // Cette ligne crée une structure JSON correctement formée
+            RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonBody);
+            requestBuilder.patch(body);
+        } else if (method == HttpMethod.GET) {
+            requestBuilder.get();
+        } else if (method == HttpMethod.POST) {
+            String jsonBody = gson.toJson(requestBody);
+            RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonBody);
+            requestBuilder.post(body);
+        } else {
+            throw new IllegalArgumentException("Méthode de requête non prise en charge: " + method);
+        }
 
-            Request request = requestBuilder.build();
-            try (Response response = client.newCall(request).execute()) {
-                if (!response.isSuccessful()) {
-                    throw new IOException("Erreur lors de la récupération des données: " + url + " " + response.code());
-                }
-                String jsonResponse = response.body() != null ? response.body().string() : "Le corps de la réponse est vide ou null.";
-                return gson.fromJson(jsonResponse, responseType);
+        Request request = requestBuilder.build();
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                // Affichage détaillé de la réponse d'erreur pour le débogage
+                String errorResponse = response.body() != null ? response.body().string() : "Aucune réponse d'erreur disponible.";
+                System.out.println("Erreur lors de la récupération des données: " + url + " " + response.code() + " - " + errorResponse);
+                throw new IOException("Erreur lors de la récupération des données: " + url + " " + response.code());
             }
+            String jsonResponse = response.body() != null ? response.body().string() : "Le corps de la réponse est vide ou null.";
+            return gson.fromJson(jsonResponse, responseType);
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("Erreur lors de la requête", e);
         }
     }

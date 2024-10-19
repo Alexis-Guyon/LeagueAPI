@@ -24,4 +24,10 @@ public class MatchMethod implements MatchService, GameFlowService {
     public CompletableFuture<Match[]> findMatch() throws IOException {
         return MatchService.super.findMatch();
     }
+
+    @Override
+    public CompletableFuture<GameFlow[]> pickChampion(int actionId, int championId) throws IOException {
+        return GameFlowService.super.pickChampion(actionId,championId);
+    }
+
 }

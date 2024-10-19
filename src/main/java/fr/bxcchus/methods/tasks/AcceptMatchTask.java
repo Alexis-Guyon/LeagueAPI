@@ -16,16 +16,31 @@ public class AcceptMatchTask implements GameFlowObserver {
     public void onGameFlowPhaseChange(String newPhase) {
         System.out.println("Phase de jeu actuelle : " + newPhase);
 
-        // Si la phase est "ReadyCheck", on accepte automatiquement le match
-        if ("ReadyCheck".equals(newPhase)) {
+        if ("ChampSelect".equals(newPhase)) {
             try {
-                System.out.println("Phase 'ReadyCheck' détectée. Acceptation automatique...");
-                gameFlowService.autoAcceptMatch().thenAccept(gameFlows -> {
-                    System.out.println("Match accepté automatiquement !");
+                // 1. Récupérer la session de sélection
+                gameFlowService.getSession().thenAccept(session -> {
+                    int actionId = session.getId();
+                    System.out.println("Session de sélection récupérée avec actionId : " + actionId);
+
+                    // 2. Choisir un champion avec un ID spécifique (par exemple 78)
+                    try {
+                        gameFlowService.pickChampion(actionId, 78)
+                                .thenAccept(gameFlows -> {
+                                    System.out.println("Champion sélectionné : " + 78);
+                                })
+                                .exceptionally(ex -> {
+                                    System.err.println("Erreur lors de la sélection du champion : " + ex.getMessage());
+                                    return null;
+                                });
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }).exceptionally(ex -> {
-                    System.out.println("Erreur lors de l'acceptation automatique : " + ex.getMessage());
+                    System.err.println("Erreur lors de la récupération de la session de sélection : " + ex.getMessage());
                     return null;
                 });
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
