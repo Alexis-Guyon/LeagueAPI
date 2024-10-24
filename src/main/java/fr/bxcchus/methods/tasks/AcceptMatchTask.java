@@ -32,9 +32,7 @@ public class AcceptMatchTask implements GameFlowObserver {
 
                 // Appel de la méthode pickChampion avec les IDs
                 gameFlowService.pickChampion(championId)
-                        .thenAccept(gameFlows -> {
-                            System.out.println("Champion sélectionné avec succès.");
-                        })
+                        .thenAccept(gameFlows -> System.out.println("Champion sélectionné avec succès."))
                         .exceptionally(ex -> {
                             System.err.println("Erreur lors de la sélection du champion : " + ex.getMessage());
                             return null;
