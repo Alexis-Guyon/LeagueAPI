@@ -1,29 +1,20 @@
 package fr.bxcchus;
 
-import fr.bxcchus.methods.MatchMethod;
+import fr.bxcchus.api.services.GameService;
+import fr.bxcchus.api.services.impl.GameServiceImpl;
 import fr.bxcchus.methods.tasks.AcceptMatchTask;
 import fr.bxcchus.subjects.GameFlowSubject;
 
-import java.io.IOException;
-
 public class Main  {
-    public static void main(String[] args) throws IOException {
-         MatchMethod matchMethod = new MatchMethod();
-        GameFlowSubject gameFlowSubject = new GameFlowSubject();
-        AcceptMatchTask matchTask = new AcceptMatchTask(matchMethod);
-        gameFlowSubject.addObserver(matchTask);
-        gameFlowSubject.startPhaseWatcher(matchMethod);
-        System.out.println("My PUUID : " + matchMethod.getSession().getPuuid());
+    public static void main(String[] args) {
+        GameService gameService = new GameServiceImpl();
+        GameFlowSubject subject = new GameFlowSubject();
 
-        try {
-            matchMethod.findMatch();
+        AcceptMatchTask acceptMatchTask = new AcceptMatchTask(gameService);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        subject.addObserver(acceptMatchTask);
 
-
-
+        subject.startPhaseWatcher(gameService);
     }
 
 }
