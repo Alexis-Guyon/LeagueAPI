@@ -3,20 +3,21 @@ package fr.bxcchus.objects;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 public class Team {
-    private List<Player> myTeam;
-
-    // Trouver un joueur par son PUUID
-    public Player findPlayerByPuuid(String puuid) {
-        for (Player player : myTeam) {
-            if (player.getPuuid().equals(puuid)) {
-                return player;
-            }
-        }
-        return null;
-    }
+    private String assignedPosition;
+    private int cellId;
+    private int championId;
+    private int championPickIntent;
+    private String nameVisibilityType;
+    private String obfuscatedPuuid;
+    private int obfuscatedSummonerId;
+    private String puuid;
+    private int selectedSkinId;
+    private String spell1Id;
+    private String spell2Id;
+    private long summonerId;
+    private int team;
+    private int wardSkinId;
 }

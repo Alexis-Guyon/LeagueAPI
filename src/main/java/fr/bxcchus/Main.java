@@ -6,13 +6,14 @@ import fr.bxcchus.subjects.GameFlowSubject;
 
 import java.io.IOException;
 
-public class Main {
-    public static void main(String[] args) {
-        MatchMethod matchMethod = new MatchMethod();
+public class Main  {
+    public static void main(String[] args) throws IOException {
+         MatchMethod matchMethod = new MatchMethod();
         GameFlowSubject gameFlowSubject = new GameFlowSubject();
         AcceptMatchTask matchTask = new AcceptMatchTask(matchMethod);
         gameFlowSubject.addObserver(matchTask);
         gameFlowSubject.startPhaseWatcher(matchMethod);
+        System.out.println("My PUUID : " + matchMethod.getSession().getPuuid());
 
         try {
             matchMethod.findMatch();
@@ -20,6 +21,9 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
+
     }
 
 }
