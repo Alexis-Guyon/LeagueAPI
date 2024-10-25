@@ -4,8 +4,6 @@ import fr.bxcchus.api.HttpMethod;
 import fr.bxcchus.api.IClient;
 import fr.bxcchus.objects.Session;
 
-import java.io.IOException;
-
 public interface SessionService extends IClient {
 
     // Méthode pour récupérer la session utilisateur
@@ -15,7 +13,7 @@ public interface SessionService extends IClient {
     }
 
     // Méthode utilitaire pour obtenir le PUUID de l'utilisateur courant
-    default String getCurrentPlayerPuuid() throws IOException {
+    default String getCurrentPlayerPuuid() {
         return getSession().getPuuid();
     }
 }
