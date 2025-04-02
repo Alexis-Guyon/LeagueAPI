@@ -7,6 +7,7 @@ Personal Java project of a bot for the game League of Legends, it allows automat
 - Search for a match
 - Accept the match
 - Lock in a champion
+- Auto recall
 
 ## To Do
 
